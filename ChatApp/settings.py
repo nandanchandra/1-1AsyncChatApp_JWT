@@ -42,6 +42,9 @@ INSTALLED_APPS = [
    
     'rest_framework',
     'djoser',
+
+    'channels',
+
     'api'
 ]
 
@@ -149,4 +152,15 @@ SIMPLE_JWT = {
     'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
     'TOKEN_TYPE_CLAIM': 'token_type',
     'AUTH_HEADER_TYPES': ('Bearer',)
+}
+
+
+
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [("127.0.0.1", 6379)],
+        },
+    },
 }
