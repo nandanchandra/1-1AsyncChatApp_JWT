@@ -42,6 +42,7 @@ INSTALLED_APPS = [
    
     'rest_framework',
     'djoser',
+    'corsheaders',
 
     'channels',
 
@@ -49,6 +50,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -76,8 +78,8 @@ TEMPLATES = [
     },
 ]
 
-ASGI_APPLICATION = 'ChatApp.asgi.application'
 WSGI_APPLICATION = 'ChatApp.wsgi.application'
+ASGI_APPLICATION = 'ChatApp.asgi.application'
 
 
 # Database
