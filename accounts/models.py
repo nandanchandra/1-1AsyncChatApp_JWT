@@ -15,11 +15,11 @@ class User(AbstractUser):
 
     email = models.EmailField(max_length=254, unique=True)
 
-    username = None
+    # username = None
 
     USERNAME_FIELD = 'email'
 
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['username']
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
