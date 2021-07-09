@@ -46,7 +46,9 @@ INSTALLED_APPS = [
 
     'channels',
 
-    'api'
+    'api',
+    'accounts'
+
 ]
 
 MIDDLEWARE = [
@@ -170,4 +172,4 @@ CHANNEL_LAYERS = {
 
 
 
-AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.User'
