@@ -1,16 +1,12 @@
 import os
 import jwt
 
-
-from django.core.asgi import get_asgi_application
-from django.contrib.auth.models import AnonymousUser
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.models import AnonymousUser
+from django.core.asgi import get_asgi_application
 from channels.auth import AuthMiddlewareStack
 from channels.db import database_sync_to_async
 from channels.middleware import BaseMiddleware
-
-
 from channels.routing import ProtocolTypeRouter, URLRouter
 
 
@@ -28,7 +24,6 @@ def get_user(validated_token):
     except:
         return AnonymousUser()
 
-
 class JwtAuthMiddleware(BaseMiddleware):
     def __init__(self, inner):
         self.inner = inner
@@ -42,7 +37,7 @@ class JwtAuthMiddleware(BaseMiddleware):
 def JwtAuthMiddlewareStack(inner):
     return JwtAuthMiddleware(AuthMiddlewareStack(inner))
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'mysite.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'ChatApp.settings')
 
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),

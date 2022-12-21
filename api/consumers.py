@@ -1,11 +1,8 @@
 import json
-
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-
 from accounts.models import User
-
-from .models import ChatMessage, Thread
+from api.models import ChatMessage, Thread
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):

@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  redis:
+    image: redis:6-alpine
+    container_name: redis-chatapp
+    networks:
+      - redis-django
+
+  chatappdjango:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: chatapp-django
+    command: >
+      sh -c  "python manage.py migrate --noinput &&
+              python manage.py collectstatic --noinput &&
+              python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    restart: "on-failure"
+    depends_on:
+      - redis
+    networks:
+      - redis-django
+
+networks:
+  redis-django:
+    driver: bridge
