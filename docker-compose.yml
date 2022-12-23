@@ -11,18 +11,51 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: chatapp-django
+    container_name: chatappdjango
     command: >
       sh -c  "python manage.py migrate --noinput &&
               python manage.py collectstatic --noinput &&
-              python manage.py runserver 0.0.0.0:8000"
+              gunicorn ChatApp.wsgi:application --bind 0.0.0.0:8000"
     volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
-    restart: "on-failure"
+      - .:/app/
+      - ./staticfiles:/app/staticfiles/
+      - ./mediafiles:/app/mediafiles/
+    expose:
+      - 8000
     depends_on:
       - redis
+    networks:
+      - redis-django
+
+  asgiserver:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: asgiserver
+    command: daphne ChatApp.asgi:application -b 0.0.0.0 -p 9000
+    volumes:
+      - .:/app/
+    expose:
+      - 9000
+    depends_on:
+      - redis
+    networks:
+      - redis-django
+
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    restart: always
+    volumes:
+      - ./staticfiles:/app/staticfiles/
+      - ./mediafiles:/app/mediafiles/
+    ports:
+      - 8000:80
+    depends_on:
+      - chatappdjango
+      - asgiserver
     networks:
       - redis-django
 

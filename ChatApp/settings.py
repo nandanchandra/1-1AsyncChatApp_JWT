@@ -13,7 +13,7 @@ SECRET_KEY = 'django-insecure-6we!$dn6jholb0$wy9m^ja$iv2vs^24g=7g4d9kq$aog3#+x!c
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1"]
+ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", 'asgiserver']
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:8000",
@@ -119,7 +119,7 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL = 'accounts.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -157,8 +157,6 @@ SIMPLE_JWT = {
     'AUTH_HEADER_TYPES': ('Bearer',)
 }
 
-
-
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -167,7 +165,3 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-
-
-AUTH_USER_MODEL = 'accounts.User'
