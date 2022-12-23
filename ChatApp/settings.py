@@ -25,23 +25,27 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # Application definition
-INSTALLED_APPS = [
+DJANGO_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+]
 
-    'rest_framework',
-    'djoser',
-    'corsheaders',
+THIRD_PARTY_APPS = [
     'channels',
+    'corsheaders',
+    'rest_framework',
+]
 
+LOCAL_APPS = [
     'api',
     'accounts'
-
 ]
+
+INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -137,16 +141,11 @@ MEDIA_ROOT = str(BASE_DIR / "mediafiles")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-DJOSER = {
-    'SERIALIZERS': {'user_create': 'djoser.serializers.UserCreateSerializer',},
-}
-
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
 }
-
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=30),
