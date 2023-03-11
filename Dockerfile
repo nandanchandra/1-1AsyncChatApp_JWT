@@ -1,26 +1,22 @@
-FROM python:3.9-slim
+FROM python:alpine3.17 as base
 
+RUN apk add --update --no-cache --virtual .tmp-build-deps \
+    gcc  libc-dev  linux-headers \
+    postgresql-dev 
+
+# Install dependencies
+COPY requirements.txt /app/requirements.txt 
+RUN pip install -r /app/requirements.txt
+
+# Now multistage build
+FROM python:alpine3.17
+RUN apk add libpq
+COPY --from=base /usr/local/lib/python3.11/site-packages/ /usr/local/lib/python3.11/site-packages/
+COPY --from=base /usr/local/bin/ /usr/local/bin/
+
+# Set work directory
 WORKDIR /app
-
-RUN mkdir -p /postgres_data
-
-# Prevents Python from writing .pyc files to disc
-ENV PYTHONDONTWRITEBYTECODE 1
-
-# Prevents Python from buffering stdout and stderr
-ENV PYTHONUNBUFFERED 1
-
-RUN apt-get update \
-    && apt-get -y install netcat gcc postgresql \
-    && apt-get clean
-
-RUN apt-get update &&\
-    apt-get install -y libproj-dev gdal-bin python3-gdal 
-
-RUN pip install --upgrade pip
-
-COPY ./requirements.txt /app/requirements.txt
-
-RUN pip install -r requirements.txt
-
+# Copy project
 COPY . /app
+
+ENV PYTHONUNBUFFERED 1
