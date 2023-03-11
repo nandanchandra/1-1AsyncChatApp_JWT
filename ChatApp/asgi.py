@@ -9,6 +9,10 @@ django.setup()
 import api.routing
 from ChatApp.jwt_middleware import JwtAuthMiddlewareStack
 
+"""The application is defined using ProtocolTypeRouter, with two sub-applications: 
+    one for handling HTTP requests and another for WebSocket connections. 
+    The WebSocket sub-application is wrapped in a JwtAuthMiddlewareStack to authenticate incoming WebSocket connections.
+"""
 application = ProtocolTypeRouter({
     "http": get_asgi_application(),
     "websocket": JwtAuthMiddlewareStack(
