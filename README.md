@@ -41,3 +41,5 @@ This Makefile provides convenience commands for running a Docker Compose based d
     5. make migrate
 
 Note: All the above commands should be executed in the same directory as the Makefile.
+
+## Demo
