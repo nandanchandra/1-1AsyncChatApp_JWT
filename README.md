@@ -43,3 +43,5 @@ This Makefile provides convenience commands for running a Docker Compose based d
 Note: All the above commands should be executed in the same directory as the Makefile.
 
 ## Demo
+
+![](https://github.com/implicitdefcncdragneel/1-1AsyncChatApp_JWT/blob/main/asyncChatApp.gif)
